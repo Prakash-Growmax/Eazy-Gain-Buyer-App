@@ -1,0 +1,53 @@
+{
+  "Home": {
+    "categories": "Categories",
+    "brands": "Brands",
+    "Search": "Search Products"
+  },
+  "Product": {
+    "AddToCart": "Add to Cart",
+    "Quantity": "Quantity",
+    "Price": "Price",
+    "Margin": "Margin",
+    "GoToCart": "Go to Cart",
+    "ClearCart": "Clear Cart",
+    "TotalPrice": "Total Price",
+    "OrderSummary": "Order Summary",
+    "TotalItems": "Total Items",
+    "TotalLP": "Total LP",
+    "Discount": "Discount",
+    "Subtotal": "Subtotal",
+    "Tax": "Tax",
+    "Total": "Total",
+    "added": "added",
+    "Checkout": "Checkout",
+    "MRP": "MRP",
+    "Net Price": "Net Price",
+    "Profit": "Profit",
+    "will be added": "will be added"
+  },
+  "Payment": {
+    "Pay with cash at the time of delivery": "Pay with cash at the time of delivery",
+    "Place Order": "Place Order",
+    "Payment Options": "Payment Options",
+    "TotalPrice": "Total Price"
+  },
+  "orders": {
+    "Order on": "Order on",
+    "TotalPrice": "Total Price",
+    "TotalItems": "Order Summary",
+    "OrderDetails": "Order Details",
+    "OrderSent": "Order Sent",
+    "ORDER ACKNOWLEDGED": "ORDER ACKNOWLEDGED",
+    "ORDER ACCEPTED": "ORDER ACCEPTED",
+    "ORDER BOOKED": "ORDER BOOKED",
+    "INVOICED": "INVOICED",
+    "SHIPPED": "SHIPPED",
+    "ORDER SENT": "ORDER SENT",
+    "EDIT IN PROGRESS": "EDIT IN PROGRESS",
+    "INVOICE CANCELLED": "INVOICE CANCELLED",
+    "ORDER CANCELLED": "ORDER CANCELLED",
+    "Congratulations": "Congratulations",
+    "Your Order has been placed successfully !": "Your Order has been placed successfully! - Thank you for placing an order. We will get back to you soon!"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "Home": {
+    "categories": "வகைகள்",
+    "brands": "பிராண்டுகள்",
+    "Search": "பொருட்களை தேடவும்"
+  },
+  "Product": {
+    "AddToCart": "கார்ட்டுக்கு நகர்த்து",
+    "Quantity": "அளவு",
+    "Price": "விலை",
+    "Margin": "மார்ஜின்",
+    "GoToCart": "கார்ட்டுக்கு செல்",
+    "ClearCart": "கார்டில் இருந்து நீக்கு",
+    "TotalPrice": "மொத்த விலை",
+    "OrderSummary": "ஆர்டர் சுருக்கம்",
+    "TotalItems": "மொத்த பொருட்கள்",
+    "TotalLP": "மொத்த விலை",
+    "Discount": "தள்ளுபடி",
+    "Subtotal": "தொகை",
+    "Tax": "வரி",
+    "Total": "மொத்த தொகை",
+    "added": "சேர்க்கப்பட்டது ",
+    "Checkout": "தொடரவும்",
+    "MRP": "MRP",
+    "Net Price": "நிகர விலை",
+    "Profit": "லாபம்",
+    "will be added": "சேர்க்கப்படும்"
+  },
+  "Payment": {
+    "Pay with cash at the time of delivery": "டெலிவரி நேரத்தில் பணத்தை செலுத்தவும்",
+    "Place Order": "ஆர்டர் செய்க",
+    "TotalPrice": "மொத்த விலை",
+    "Payment Options": "கட்டண விருப்பங்கள்"
+  },
+  "orders": {
+    "Order on": "ஆர்டர் தேதி",
+    "TotalPrice": "மொத்த விலை",
+    "TotalItems": "மொத்த பொருட்கள்",
+    "OrderDetails": "ஆர்டர் விவரம்",
+    "OrderSent": "ஆர்டர் அனுப்பப்பட்டது",
+    "ORDER ACKNOWLEDGED": "ஆர்டர் ஒப்புக்கொள்ளப்பட்டது",
+    "ORDER ACCEPTED": "ஆர்டர் ஏற்றுக்கொள்ளப்பட்டது",
+    "ORDER BOOKED": "ஆர்டர் பதிவானது ",
+    "INVOICED": "இன்வோய்ஸ் ஆனது ",
+    "SHIPPED": "அனுப்பப்பட்டது",
+    "ORDER SENT": "ஆர்டர் அனுப்பப்பட்டது",
+    "EDIT IN PROGRESS": "EDIT IN PROGRESS",
+    "INVOICE CANCELLED": "இன்வோய்ஸ் ரத்து",
+    "ORDER CANCELLED": "ஆர்டர் ரத்து",
+    "Congratulations": "வாழ்த்துகள்",
+    "Your Order has been placed successfully !": "ஆர்டர் செய்ததற்கு நன்றி. நாங்கள் விரைவில் உங்களைத் தொடர்புகொள்வோம்! "
+  }
+}

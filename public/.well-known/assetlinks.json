@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "app.vercel.easy_gain_buyer_mobile.twa",
+    "sha256_cert_fingerprints": ["35:C9:34:D9:32:12:A3:4A:E7:A5:1F:7A:57:E6:D1:7F:05:84:7C:DC:E6:3A:8C:DF:A0:08:CB:F0:DB:07:EC:4E"]
+  }
+}]
