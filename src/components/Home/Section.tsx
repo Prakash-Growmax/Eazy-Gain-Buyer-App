@@ -1,6 +1,6 @@
 import getBrands from "@/lib/get-brands";
 import getCategoryData from "@/lib/get-categorys";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { uniqBy } from "lodash";
 import dynamic from "next/dynamic";
 import SectionTitle from "./SectionTitle";

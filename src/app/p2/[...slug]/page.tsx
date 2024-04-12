@@ -1,12 +1,12 @@
+"use client";
 import ProductList2 from "@/components/ProductList/ProductList2";
+import { SwipeContext } from "@/components/ProductList/SwipeProvider";
 import axios from "@/lib/axios";
 import buildProductListElasticQuery from "@/lib/build-product-list-elastic-query";
 import FormatElastic from "@/lib/format-elastic";
-import getBrands from "@/lib/get-brands";
-import getCategoryData from "@/lib/get-categorys";
+import { useContext, useEffect, useState } from "react";
 
 const getData = async (id: string, CheckIfBrands: boolean) => {
-  let CatBrandata;
   const elasticQuery = buildProductListElasticQuery(
     id,
     process.env.NEXT_PUBLIC_TENANT_ID!,
@@ -17,26 +17,40 @@ const getData = async (id: string, CheckIfBrands: boolean) => {
     process.env.NEXT_PUBLIC_BASE_URL + "elasticsearch/invocations",
     elasticQuery
   );
-
-  if (CheckIfBrands) {
-    CatBrandata = await getBrands();
-  } else {
-    CatBrandata = await getCategoryData();
-  }
-  return { ProductData: FormatElastic(esdata), CatBrandata };
+  return { ProductData: FormatElastic(esdata) };
 };
-export default async function page({
+
+export default function Page({
   params,
   searchParams,
 }: {
   params: { slug: string[] };
-  searchParams?: { sc_id: string, brandId: string  };
+  searchParams?: { sc_id: string; brandId: string };
 }) {
+  const { navigating } = useContext(SwipeContext);
   const { slug } = params;
   const CheckIfBrands = slug[0] === "Brands";
-  const id =(CheckIfBrands ? searchParams?.brandId : slug[1])?.split("_")[1] || "";
-  const { ProductData, CatBrandata } = await getData(id, CheckIfBrands);
-  
+  const id =
+    (CheckIfBrands ? searchParams?.brandId : slug[1])?.split("_")[1] || "";
+
+  const [ProductData, setProductData] = useState([]);
+  const [isFetchingData, setIsFetchingData] = useState(false);
+
+  async function fetchData() {
+    setIsFetchingData(true);
+    const { ProductData }: { ProductData: any } = await getData(
+      id,
+      CheckIfBrands
+    );
+    setProductData(ProductData);
+    setIsFetchingData(false);
+  }
+
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, CheckIfBrands, navigating]);
+
   return (
     <>
       <ProductList2
@@ -44,7 +58,7 @@ export default async function page({
         CurrentId={id}
         isBrands={CheckIfBrands}
         ProductData={ProductData}
-        CatBrandata={CatBrandata}
+        isLoading={isFetchingData}
       />
     </>
   );

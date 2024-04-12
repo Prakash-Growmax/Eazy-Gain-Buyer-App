@@ -1,6 +1,7 @@
 "use client";
 import useBuildOrderProducts from "@/lib/hooks/useBuildOrderProducts";
 import useDiscounts from "@/lib/hooks/useDiscounts";
+import useSetPublicPageData from "@/lib/hooks/useFetchPublicPageData";
 import useCart from "@/lib/hooks/usecart";
 import {
   AppBar,
@@ -18,6 +19,7 @@ import { useSwipeable } from "react-swipeable";
 import slugify from "slugify";
 import PricingFormat from "../PricingFormat";
 import ProductCard from "../ProductCard";
+import { PublicPageContext } from "../context/PublicPageContext";
 import MuIconify from "../iconify/mui-iconify";
 import ProductCardLoading from "./ProductCardLoading";
 import { SwipeContext } from "./SwipeProvider";
@@ -26,15 +28,17 @@ export default function ProductList2({
   ProductData,
   CurrentId,
   isBrands,
-  CatBrandata,
   searchParams,
+  isLoading, 
 }: {
   ProductData: any[];
   CurrentId: string;
   isBrands: boolean;
-  CatBrandata: any[];
   searchParams: string | undefined;
+  isLoading:boolean;
 }) {
+  const { BrandList, CategoryList, } = useContext(PublicPageContext);
+  useSetPublicPageData(isBrands);
   const { t } = useTranslation("Product");
   const subCategoryId = parseInt(searchParams || "");
   const { handleChangeCurrentId, setNavigating, navigating } =
@@ -42,11 +46,11 @@ export default function ProductList2({
   const { replace, push } = useRouter();
   const pathname = usePathname();
   const Subcategory = filter(
-    CatBrandata,
+    CategoryList,
     (o: any) => o.c_id === parseInt(CurrentId)
   );
   const BrandsData = find(
-    CatBrandata,
+    BrandList,
     (o: any) => o.brandId === parseInt(CurrentId)
   );
   const { CartData, ClearCart } = useCart();
@@ -73,10 +77,12 @@ export default function ProductList2({
       }
       if (isBrands) {
         const CurrentIndex = findIndex(
-          CatBrandata,
+          BrandList,
           (o: any) => o.brandId === parseInt(CurrentId)
         );
-        const HasRight = CatBrandata[CurrentIndex + 1];
+        
+        const HasRight = BrandList[CurrentIndex + 1];
+        
         if (CurrentIndex === 0) {
           handleChangeCurrentId("");
           const { brandsName, brandId } = !Array.isArray(BrandsData)
@@ -131,10 +137,10 @@ export default function ProductList2({
       }
       if (isBrands) {
         const CurrentIndex = findIndex(
-          CatBrandata,
+          BrandList,
           (o: any) => o.brandId === parseInt(CurrentId)
         );
-        const HasLeft = CatBrandata[CurrentIndex - 1];
+        const HasLeft = BrandList[CurrentIndex - 1];
         if (CurrentIndex === 0) {
           const { brandId, brandsName } = !Array.isArray(BrandsData)
             ? BrandsData
@@ -189,7 +195,7 @@ export default function ProductList2({
   return (
     <>
       <div {...handlers}>
-        {navigating ? (
+        {navigating || isLoading ? (
           <ProductCardLoading />
         ) : (
           FilterProduct.map((o) => (

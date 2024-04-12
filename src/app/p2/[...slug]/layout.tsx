@@ -1,8 +1,7 @@
-import PlpHeaderLoading from "@/components/ProductList/PlpHeaderLoading";
+'use client'
 import ProductCardLoading from "@/components/ProductList/ProductCardLoading";
 import SwipeProvider from "@/components/ProductList/SwipeProvider";
 import { ReactNode, Suspense } from "react";
-
 export default function ProductLayout({
   children,
   header,
@@ -10,6 +9,7 @@ export default function ProductLayout({
   children: ReactNode;
   header: ReactNode;
 }) {
+
   return (
     <SwipeProvider>
       {header}

@@ -1,3 +1,4 @@
+import PublicPageProvider from "@/components/context/PublicPageContext";
 import { LangcookieName } from "@/middleware";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
@@ -74,13 +75,13 @@ export default function RootLayout({
   const currentLang = cookieStore.get(LangcookieName);
 
   return (
-    <html translate="no" lang={currentLang?.value || "ta"}>
+    <html translate='no' lang={currentLang?.value || "ta"}>
       <body>
         <Authsession>
           <ThemeRegistry>
             <AppHeader />
             <LangProvider currentLang={currentLang?.value}>
-              {children}
+              <PublicPageProvider>{children}</PublicPageProvider>
             </LangProvider>
           </ThemeRegistry>
         </Authsession>
