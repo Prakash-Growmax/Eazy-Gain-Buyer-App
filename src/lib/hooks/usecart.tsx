@@ -1,8 +1,8 @@
+import { filter } from "lodash";
 import { useState } from "react";
 import useSWR from "swr/immutable";
 import useAxiosAuth from "./useAxiosAuth";
 import useUser from "./useUser";
-import { find } from "lodash";
 
 export default function useCart() {
   const { user } = useUser();
@@ -47,7 +47,7 @@ export default function useCart() {
       const { productId } = data;
       try {
         setaddingToCart(true);
-        await AxiosInstance({
+        const res = await AxiosInstance({
           baseURL: process.env.NEXT_PUBLIC_BASE_URL,
           url: IsInCart
             ? `corecommerce/carts?userId=${user.userId}&productsId=${productId}&itemNo=${IsInCart.itemNo}&pos=0`
@@ -67,8 +67,7 @@ export default function useCart() {
               : parseFloat(minQty),
           },
         });
-
-        await mutate();
+        await mutate(res?.data?.data, false);
 
         setaddingToCart(false);
       } catch (error) {
@@ -90,6 +89,9 @@ export default function useCart() {
               "Content-Type": "application/json",
             },
           });
+  
+          
+          await mutate();
         } else {
           await AxiosInstance({
             baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -210,6 +212,7 @@ export default function useCart() {
             "Content-Type": "application/json",
           },
         });
+   
       } else {
         if (!(CasesQty * data.unitOfMeasure)) {
           await AxiosInstance({
@@ -239,9 +242,8 @@ export default function useCart() {
           });
         }
       }
-
-      await mutate();
-
+      const latestCartData = filter(CartData, (ct : any) => ct.itemNo !== IsInCart?.itemNo )
+      await mutate(latestCartData)
       setaddingToCart(false);
     };
   return {

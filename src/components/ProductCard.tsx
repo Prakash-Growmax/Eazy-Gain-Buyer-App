@@ -13,12 +13,12 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import IncrementerButton from "./IncrementerButton";
-import LazyImage from "./LazyImage";
 import PricingFormat from "./PricingFormat";
 import DiscountTable from "./ProductList/DiscountDetails";
 import QuantityEdit from "./QuantityEdit";
 import TextMaxLine from "./TextMaxContent";
 import MuIconify from "./iconify/mui-iconify";
+import Image from "./image";
 import { pluralize } from "./image/utils";
 import Label from "./label";
 import { useLightBox } from "./lightbox";
@@ -186,14 +186,20 @@ function ProductCard({
             maxWidth={125}
             maxHeight={125}
           >
-            <LazyImage
-              fill
+            <Image
+              ratio="1/1"
               onClick={HandleOpenImage}
               src={ProductImage}
               sx={{
                 objectFit: "contain",
                 p: 1,
+                width:'100%',
+                height:'100%',
+                maxHeight:'100%',
+                maxWidth:'100%',
+
               }}
+              
               alt={productShortDescription || shortDescription}
             />
           </Box>
