@@ -7,6 +7,7 @@ import FormatElastic from "@/lib/format-elastic";
 import { useContext, useEffect, useState } from "react";
 
 const getData = async (id: string, CheckIfBrands: boolean) => {
+  
   const elasticQuery = buildProductListElasticQuery(
     id,
     process.env.NEXT_PUBLIC_TENANT_ID!,
@@ -37,6 +38,7 @@ export default function Page({
   const [isFetchingData, setIsFetchingData] = useState(false);
 
   async function fetchData() {
+    
     setIsFetchingData(true);
     const { ProductData }: { ProductData: any } = await getData(
       id,
@@ -47,7 +49,9 @@ export default function Page({
   }
 
   useEffect(() => {
-    fetchData();
+    if(id){
+      fetchData();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, CheckIfBrands, navigating]);
 

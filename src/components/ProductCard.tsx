@@ -185,10 +185,10 @@ function ProductCard({
             minHeight={125}
             maxWidth={125}
             maxHeight={125}
+            onClick={HandleOpenImage}
           >
             <Image
               ratio="1/1"
-              onClick={HandleOpenImage}
               src={ProductImage}
               sx={{
                 objectFit: "contain",
