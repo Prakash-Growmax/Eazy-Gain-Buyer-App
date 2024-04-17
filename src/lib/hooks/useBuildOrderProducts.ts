@@ -1,10 +1,10 @@
 import { cloneDeep, find, map } from "lodash";
 import { useEffect, useState } from "react";
-import useDiscounts from "./useDiscounts";
 import {
   assign_pricelist_discounts_data_to_products,
   cartCalculation,
 } from "../cart-calculation";
+import useDiscounts from "./useDiscounts";
 
 interface CartData {
   productId: number;
@@ -23,7 +23,6 @@ export default function useBuildOrderProducts(cartData: CartData[]) {
   );
   const [CartValue, SetCartValue] = useState<Record<string, any>>({});
   const [Products, setProducts] = useState<ProductData[]>([]);
-  // console.log(cartData[0].tax)
   useEffect(() => {
     const Products = map(cartData, (cart) => {
       const Productwise_Discounts =

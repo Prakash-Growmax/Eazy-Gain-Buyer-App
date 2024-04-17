@@ -28,31 +28,29 @@ export default function Page({
   params: { slug: string[] };
   searchParams?: { sc_id: string; brandId: string };
 }) {
-  const { navigating } = useContext(SwipeContext);
+  const { setIsDataFetching } = useContext(SwipeContext);
   const { slug } = params;
   const CheckIfBrands = slug[0] === "Brands";
   const id =
     (CheckIfBrands ? searchParams?.brandId : slug[1])?.split("_")[1] || "";
+    const sc_id = CheckIfBrands ? "" : searchParams?.sc_id || "";
 
   const [ProductData, setProductData] = useState([]);
-  const [isFetchingData, setIsFetchingData] = useState(false);
 
   async function fetchData() {
-    setIsFetchingData(true);
     const { ProductData }: { ProductData: any } = await getData(
       id,
       CheckIfBrands
     );
     setProductData(ProductData);
-    setIsFetchingData(false);
+    setIsDataFetching(false);
   }
-
   useEffect(() => {
-    if(id){
+    if(id || sc_id){
       fetchData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, CheckIfBrands]);
+  }, [id, CheckIfBrands,sc_id]);
 
   return (
     <>
@@ -61,7 +59,6 @@ export default function Page({
         CurrentId={id}
         isBrands={CheckIfBrands}
         ProductData={ProductData}
-        isLoading={isFetchingData}
       />
     </>
   );

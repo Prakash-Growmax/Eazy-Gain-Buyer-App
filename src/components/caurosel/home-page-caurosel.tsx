@@ -7,7 +7,6 @@ import Carousel from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import CarouselDots from "./carousel-dots";
-import LazyImage from "../LazyImage";
 
 export default function HomePageCaurosel({ data }: { data: any }) {
 
@@ -15,7 +14,7 @@ export default function HomePageCaurosel({ data }: { data: any }) {
   const carousel = useCarousel({
     speed: 800,
     autoplay: true,
-    lazyLoad: "ondemand",
+    lazyLoad: undefined,
     ...CarouselDots({
       rounded: true,
       sx: {
@@ -59,14 +58,14 @@ function CarouselItem({ item }: { item: any }) {
     buttonLabel,
   } = item;
   const renderImg = (
-    <LazyImage
+    <img
       alt={"name"}
       src={image}
-      fill={true}
-      priority
-      sx={{
+      // fill={true}
+      // priority
+      style={{
         height: "100%",
-        width: 1,
+        width: "100%",
 
         objectFit: "cover",
       }}

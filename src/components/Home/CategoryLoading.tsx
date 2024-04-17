@@ -1,6 +1,5 @@
 "use client";
 import { Box, Paper, Skeleton, Stack, Typography } from "@mui/material";
-import React from "react";
 import TextMaxLine from "../TextMaxContent";
 
 export default function CategoryLoading() {

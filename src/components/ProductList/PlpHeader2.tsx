@@ -37,7 +37,7 @@ export default function PlpHeader2({
     useContext(PublicPageContext);
   useSetPublicPageData(isBrands);
   const theme = useTheme();
-  const { currentId, navigating, setNavigating } = useContext(SwipeContext);
+  const { currentId, navigating, setNavigating,setIsDataFetching } = useContext(SwipeContext);
   const { i18n } = useTranslation();
   const { push, replace } = useRouter();
   const handleSearchClick = () => {
@@ -93,6 +93,7 @@ export default function PlpHeader2({
 
     if (isBrands) {
       const { brandsName, brandId } = BrandList?.[newValue];
+      setIsDataFetching(true)
       setNavigating(() =>
         replace(
           `/p2/Brands?brandName=${slugify(brandsName)}&&brandId=b_${brandId}`
@@ -102,10 +103,12 @@ export default function PlpHeader2({
     }
     if (newValue) {
       setNavigating(() =>
-        replace(`${pathname}?sc_id=${Subcategory[newValue - 1].sc_id}`)
+        replace(`${pathname}?sc_id=${Subcategory?.[newValue - 1]?.sc_id}`)
       );
+      setIsDataFetching(true)
     } else {
       setNavigating(() => replace(`${pathname}`));
+      setIsDataFetching(true)
     }
   };
   return (
@@ -181,11 +184,11 @@ export default function PlpHeader2({
                         objectFit: "contain",
                       }}
                       src={`${
-                        Subcategory[0].c_imageSource
-                          ? Subcategory[0].c_imageSource
+                        Subcategory?.[0]?.c_imageSource
+                          ? Subcategory?.[0]?.c_imageSource
                           : "/assets/placeholder.png"
                       }`}
-                      alt={Subcategory[0].c_name}
+                      alt={Subcategory?.[0]?.c_name}
                     />
                   )
                 }
@@ -222,7 +225,7 @@ export default function PlpHeader2({
                     label={o.brandsName}
                   />
                 ))
-              : Subcategory.map((o, i) => (
+              : Subcategory?.map((o, i) => (
                   <StyledTab
                     disabled={navigating}
                     {...a11yProps(i + 1)}

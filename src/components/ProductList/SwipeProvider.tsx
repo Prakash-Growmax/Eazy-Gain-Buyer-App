@@ -6,13 +6,16 @@ export const SwipeContext = React.createContext<{
   handleChangeCurrentId: (newId: string) => void;
   navigating: boolean;
   setNavigating: TransitionStartFunction;
+  isDataFetching : boolean;
+  setIsDataFetching :React.Dispatch<React.SetStateAction<boolean>>; 
 }>({
   currentId: "",
   handleChangeCurrentId: (newId: string) => {
-    console.log(newId);
   },
   navigating: false,
   setNavigating: () => {},
+  isDataFetching : false,
+  setIsDataFetching : () => {} 
 });
 
 export default function SwipeProvider({
@@ -22,13 +25,14 @@ export default function SwipeProvider({
 }) {
   const [currentId, setCurrentId] = useState("");
   const [navigating, setNavigating] = useTransition();
+  const [isDataFetching, setIsDataFetching] = useState(false)
   const handleChangeCurrentId = (newId: string) => {
     setCurrentId(newId);
   };
 
   return (
     <SwipeContext.Provider
-      value={{ currentId, handleChangeCurrentId, navigating, setNavigating }}
+      value={{ currentId, handleChangeCurrentId, navigating, setNavigating, isDataFetching, setIsDataFetching }}
     >
       {children}
     </SwipeContext.Provider>

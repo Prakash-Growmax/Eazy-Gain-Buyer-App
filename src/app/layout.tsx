@@ -6,8 +6,10 @@ import { cookies } from "next/headers";
 
 const LangProvider = dynamic(() => import("@/components/context/LangProvider"));
 const Authsession = dynamic(() => import("@/components/providers/Authsession"));
-const ThemeRegistry = dynamic(() => import("@/components/Theme/ThemeRegistry"));
-const AppHeader = dynamic(() => import("@/components/header"), { ssr: false });
+// const ThemeRegistry = dynamic(() => import("@/components/Theme/ThemeRegistry"));
+import ThemeRegistry from "@/components/Theme/ThemeRegistry";
+// const AppHeader = dynamic(() => import("@/components/header"), { ssr: false });
+import AppHeader from "@/components/header";
 
 export const metadata: Metadata = {
   title: "EazyGain",

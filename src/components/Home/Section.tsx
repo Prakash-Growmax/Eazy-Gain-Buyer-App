@@ -2,9 +2,8 @@ import getBrands from "@/lib/get-brands";
 import getCategoryData from "@/lib/get-categorys";
 import { Box } from "@mui/material";
 import { uniqBy } from "lodash";
-import dynamic from "next/dynamic";
+import SectionCard from "./SectionCard";
 import SectionTitle from "./SectionTitle";
-const SectionCard = dynamic(() => import("./SectionCard"), { ssr: false });
 
 async function getData(isBrand: boolean) {
   if (isBrand) {

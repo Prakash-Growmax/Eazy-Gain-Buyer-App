@@ -29,19 +29,17 @@ export default function ProductList2({
   CurrentId,
   isBrands,
   searchParams,
-  isLoading, 
 }: {
   ProductData: any[];
   CurrentId: string;
   isBrands: boolean;
   searchParams: string | undefined;
-  isLoading:boolean;
 }) {
-  const { BrandList, CategoryList, } = useContext(PublicPageContext);
+  const { BrandList, CategoryList } = useContext(PublicPageContext);
   useSetPublicPageData(isBrands);
   const { t } = useTranslation("Product");
   const subCategoryId = parseInt(searchParams || "");
-  const { handleChangeCurrentId, setNavigating, navigating } =
+  const { handleChangeCurrentId, setNavigating, navigating,isDataFetching,setIsDataFetching } =
     useContext(SwipeContext);
   const { replace, push } = useRouter();
   const pathname = usePathname();
@@ -79,31 +77,33 @@ export default function ProductList2({
           BrandList,
           (o: any) => o.brandId === parseInt(CurrentId)
         );
-        
+
         const HasRight = BrandList[CurrentIndex + 1];
-        
+
         if (CurrentIndex === 0) {
           handleChangeCurrentId("");
           const { brandsName, brandId } = !Array.isArray(BrandsData)
             ? BrandsData
             : BrandsData[0];
-          setNavigating(() =>
+            setIsDataFetching(true);
+          setNavigating(() => {
             replace(
               `/p2/Brands?brandName=${slugify(
                 brandsName
               )}&&brandId=b_${brandId}`
-            )
-          );
+            );
+          });
         }
         if (HasRight) {
           handleChangeCurrentId(HasRight.brandId.toString());
-          setNavigating(() =>
+          setIsDataFetching(true);
+          setNavigating(() => {
             replace(
               `/p2/Brands?brandName=${slugify(
                 HasRight.brandsName
               )}&&brandId=b_${HasRight.brandId}`
-            )
-          );
+            );
+          });
         }
       } else {
         const currentIsSub = Boolean(subCategoryId);
@@ -115,18 +115,24 @@ export default function ProductList2({
           const HasRight = Subcategory[CurrentIndex + 1];
           if (CurrentIndex === 0) {
             handleChangeCurrentId("");
-            setNavigating(() => replace(`${pathname}`));
+            setIsDataFetching(true);
+            setNavigating(() => {
+              replace(`${pathname}`);
+            });
           }
           if (HasRight) {
             handleChangeCurrentId(HasRight.sc_id.toString());
-            setNavigating(() => replace(`${pathname}?sc_id=${HasRight.sc_id}`));
+            setIsDataFetching(true);
+            setNavigating(() => {
+              replace(`${pathname}?sc_id=${HasRight.sc_id}`);
+            });
           }
         } else {
           handleChangeCurrentId(Subcategory[0].sc_id.toString());
-
-          setNavigating(() =>
-            replace(`${pathname}?sc_id=${Subcategory[0].sc_id}`)
-          );
+          setIsDataFetching(true);
+          setNavigating(() => {
+            replace(`${pathname}?sc_id=${Subcategory[0].sc_id}`);
+          });
         }
       }
     },
@@ -145,23 +151,25 @@ export default function ProductList2({
             ? BrandsData
             : BrandsData[0];
           handleChangeCurrentId(brandId.toString());
-          setNavigating(() =>
+          setIsDataFetching(true);
+          setNavigating(() => {
             replace(
               `/p2/Brands?brandName=${slugify(
                 brandsName
               )}&&brandId=b_${brandId}`
-            )
-          );
+            );
+          });
         }
         if (HasLeft) {
           handleChangeCurrentId(HasLeft.brandId.toString());
-          setNavigating(() =>
+          setIsDataFetching(true);
+          setNavigating(() => {
             replace(
               `/p2/Brands?brandName=${slugify(HasLeft.brandsName)}&&brandId=b_${
                 HasLeft.brandId
               }`
-            )
-          );
+            );
+          });
         }
       } else {
         const currentIsSub = Boolean(subCategoryId);
@@ -173,12 +181,18 @@ export default function ProductList2({
 
           if (CurrentIndex === 0) {
             handleChangeCurrentId("");
-            setNavigating(() => replace(`${pathname}`));
+            setIsDataFetching(true);
+            setNavigating(() => {
+              replace(`${pathname}`);
+            });
           }
           const HasLeft = Subcategory[CurrentIndex - 1];
           if (CurrentIndex === 0) {
             handleChangeCurrentId("");
-            setNavigating(() => replace(`${pathname}`));
+            setIsDataFetching(true);
+            setNavigating(() => {
+              replace(`${pathname}`);
+            });
           }
           if (HasLeft) {
             handleChangeCurrentId(HasLeft.sc_id.toString());
@@ -194,7 +208,7 @@ export default function ProductList2({
   return (
     <>
       <div {...handlers}>
-        {navigating || isLoading ? (
+        {isDataFetching || navigating ? (
           <ProductCardLoading />
         ) : (
           FilterProduct.map((o) => (

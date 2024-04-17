@@ -1,5 +1,4 @@
 "use client";
-import LazyImage from "@/components/LazyImage";
 import useSetPublicPageData from "@/lib/hooks/useFetchPublicPageData";
 import { Box, Paper, Stack } from "@mui/material";
 import { useRouter } from "next/navigation";
@@ -65,13 +64,8 @@ export default function CategoryTab({
             }}
           >
             <Box position='relative' height={100} width={100}>
-              <LazyImage
+              <img 
                 alt={isBrand ? o.brandsName : o.c_name}
-                layout='fill'
-                sx={{
-                  borderRadius: 1,
-                  // objectFit: "contain",
-                }}
                 src={
                   isBrand
                     ? o.brandImage
@@ -81,7 +75,22 @@ export default function CategoryTab({
                     ? o.c_imageSource
                     : "/assets/placeholder.png"
                 }
+                style={{
+                  borderRadius:"8px",
+                  objectFit:"contain",
+                  width:'100px',
+                  height:'100px'
+                }}
+              
               />
+              {/* <LazyImage
+                layout='fill'
+                sx={{
+                  borderRadius: 1,
+                  // objectFit: "contain",
+                }}
+                
+              /> */}
             </Box>
             {!isBrand && (
               <TextMaxLine

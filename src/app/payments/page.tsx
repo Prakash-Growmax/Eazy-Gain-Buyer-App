@@ -2,7 +2,6 @@
 import BackButton from "@/components/BackButton";
 /* eslint-disable @next/next/no-img-element */
 import PricingFormat from "@/components/PricingFormat";
-import MuIconify from "@/components/iconify/mui-iconify";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import useBuildOrderProducts from "@/lib/hooks/useBuildOrderProducts";
 import useBuildOrdersBody from "@/lib/hooks/useBuildOrdersBody";
@@ -17,16 +16,15 @@ import {
   DialogContent,
   Divider,
   FormControlLabel,
-  IconButton,
   Radio,
   RadioGroup,
   Skeleton,
   Toolbar,
-  Typography,
+  Typography
 } from "@mui/material";
 import { find, sortBy } from "lodash";
 import { useRouter } from "next/navigation";
-import React, { Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function Payment() {
@@ -247,7 +245,6 @@ export default function Payment() {
         var rzp1 = new (window as any).Razorpay(options).on(
           "payment.failed",
           function (response: any) {
-            console.log(response);
           }
         );
         rzp1.open();
