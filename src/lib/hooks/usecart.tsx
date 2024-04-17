@@ -1,4 +1,3 @@
-import { filter } from "lodash";
 import { useState } from "react";
 import useSWR from "swr/immutable";
 import useAxiosAuth from "./useAxiosAuth";
@@ -106,13 +105,14 @@ export default function useCart() {
             data: {
               pos: 0,
               productsId: data.productId,
+              productId:data.productId,
               itemNo: IsInCart?.itemNo,
               quantity: IsInCart.quantity - parseFloat(minQty),
             },
           });
+         await mutate();
         }
 
-        await mutate();
         setaddingToCart(false);
       } catch (error) {
         setaddingToCart(false);
@@ -125,7 +125,7 @@ export default function useCart() {
 
         await AxiosInstance({
           baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-          url: `corecommerce/carts?userId=${user.userId}&pos=0`,
+          url: `corecommerce/carts?userId=${user.userId}&productsId=${data?.productId}&itemNo=${IsInCart.itemNo}&pos=0`,
           method: IsInCart ? "PUT" : "POST",
           headers: {
             "x-tenant": process.env.NEXT_PUBLIC_TENANT_ID,
@@ -134,6 +134,7 @@ export default function useCart() {
           data: {
             pos: 0,
             productsId: data.productId,
+            productId:data.productId,
             itemNo: IsInCart?.itemNo,
             quantity:
               IsInCart.quantity < unitOfMeasure
@@ -173,7 +174,7 @@ export default function useCart() {
         } else {
           await AxiosInstance({
             baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-            url: `corecommerce/carts?userId=${user.userId}&pos=1`,
+            url: `corecommerce/carts?userId=${user.userId}&productsId=${data?.productId}&itemNo=${IsInCart.itemNo}&pos=0`,
             method: "PUT",
             headers: {
               "x-tenant": process.env.NEXT_PUBLIC_TENANT_ID,
@@ -182,6 +183,7 @@ export default function useCart() {
             data: {
               pos: 0,
               productsId: data.productId,
+              productId:data.productId,
               itemNo: IsInCart?.itemNo,
               quantity: IsInCart?.quantity - data.unitOfMeasure,
             },
@@ -196,7 +198,7 @@ export default function useCart() {
       }
     };
   const handleDeleteToCart =
-    (IsInCart: any, data: any, quantity?: any, isFromCart?: Boolean) =>
+    (IsInCart: any, data: any, quantity?: any, isFromCart?: Boolean, isCase?:Boolean) =>
     async () => {
       setaddingToCart(true);
       data.unitOfMeasure = data.unitOfMeasure ? data.unitOfMeasure : 0;
@@ -214,7 +216,7 @@ export default function useCart() {
         });
    
       } else {
-        if (!(CasesQty * data.unitOfMeasure)) {
+        if (!SeperateQty && CasesQty === 1) {
           await AxiosInstance({
             baseURL: process.env.NEXT_PUBLIC_BASE_URL,
             url: `corecommerce/carts/${user.userId}?productsId=${data.productId}&itemNo=${IsInCart?.itemNo}&pos=0`,
@@ -227,7 +229,7 @@ export default function useCart() {
         } else {
           await AxiosInstance({
             baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-            url: `corecommerce/carts?userId=${user.userId}&pos=1`,
+            url: `corecommerce/carts?userId=${user.userId}&productsId=${data?.productId}&itemNo=${IsInCart.itemNo}&pos=0`,
             method: "PUT",
             headers: {
               "x-tenant": process.env.NEXT_PUBLIC_TENANT_ID,
@@ -236,14 +238,14 @@ export default function useCart() {
             data: {
               pos: 0,
               productsId: data.productId,
+              productId:data.productId,
               itemNo: IsInCart?.itemNo,
-              quantity: CasesQty * data.unitOfMeasure,
+              quantity:  IsInCart?.quantity - (isCase ?  data.unitOfMeasure : SeperateQty),
             },
           });
         }
       }
-      const latestCartData = filter(CartData, (ct : any) => ct.itemNo !== IsInCart?.itemNo )
-      await mutate(latestCartData)
+      await mutate()
       setaddingToCart(false);
     };
   return {

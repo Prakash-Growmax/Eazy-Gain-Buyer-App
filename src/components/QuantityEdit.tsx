@@ -1,3 +1,7 @@
+import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
+import useUser from "@/lib/hooks/useUser";
+import useCart from "@/lib/hooks/usecart";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
@@ -10,14 +14,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import { isArray } from "lodash";
-import { LoadingButton } from "@mui/lab";
-import { useRouter } from "next/navigation";
-import useCart from "@/lib/hooks/usecart";
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import useUser from "@/lib/hooks/useUser";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import MuIconify from "./iconify/mui-iconify";
 
 interface QuantityEditProps {
@@ -41,6 +40,7 @@ interface QuantityEditProps {
     itemNo: string;
     quantity: number | undefined;
   } | null;
+  closeQtyEdit?:any;
 }
 
 function QuantityEdit({
@@ -51,6 +51,7 @@ function QuantityEdit({
   ShowQty,
   IsOpenCase,
   openQtyEdit,
+  closeQtyEdit,
 }: QuantityEditProps) {
 
   const [AddingToCart, setaddToCart] = useState(false);
@@ -73,7 +74,6 @@ function QuantityEdit({
   const { user } = useUser();
   const { userId, accessToken } = user || {};
   const { Cartmutate } = useCart();
-  const router = useRouter();
   useEffect(() => {
     setValue(
       !primaryUOM ? IsInCart?.quantity : IsOpenCase ? CasesQty : ShowQty
@@ -90,31 +90,45 @@ function QuantityEdit({
   const handleAddToCart = async () => {
     try {
       setaddToCart(true);
-      await AxiosInstance({
-        baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-        url: IsInCart
-          ? `corecommerce/carts?userId=${userId}&productsId=${productId}&itemNo=${IsInCart.itemNo}&pos=0`
-          : `corecommerce/carts?userId=${userId}&pos=0`,
-        method: "PUT",
-        headers: {
-          Authorization: "Bearer " + accessToken,
-          "x-tenant": process.env.NEXT_PUBLIC_TENANT_ID,
-          "Content-Type": "application/json",
-        },
-        data: {
-          pos: 0,
-          productsId: data.productId,
-          itemNo: IsInCart?.itemNo,
-          quantity: !packagingQty
-            ? parseFloat(Value)
-            : IsOpenCase
-            ? ShowQty + parseFloat(Value) * unitOfMeasure
-            : CasesQty * unitOfMeasure + parseFloat(Value),
-        },
-      });
+      const final_qty = !packagingQty
+      ? parseFloat(Value)
+      : IsOpenCase
+      ? ShowQty + parseFloat(Value) * unitOfMeasure
+      : CasesQty * unitOfMeasure + parseFloat(Value)
+      if(final_qty === 0){
+        await AxiosInstance({
+          baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+          url: `corecommerce/carts/${userId}?productsId=${productId}&itemNo=${IsInCart?.itemNo}&pos=0`,
+          method: "DELETE",
+          headers: {
+            "x-tenant": process.env.NEXT_PUBLIC_TENANT_ID,
+            "Content-Type": "application/json",
+          },
+        });
+      }else{
+        await AxiosInstance({
+          baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+          url: IsInCart
+            ? `corecommerce/carts?userId=${userId}&productsId=${productId}&itemNo=${IsInCart.itemNo}&pos=0`
+            : `corecommerce/carts?userId=${userId}&pos=0`,
+          method: "PUT",
+          headers: {
+            Authorization: "Bearer " + accessToken,
+            "x-tenant": process.env.NEXT_PUBLIC_TENANT_ID,
+            "Content-Type": "application/json",
+          },
+          data: {
+            pos: 0,
+            productsId: data.productId,
+            itemNo: IsInCart?.itemNo,
+            quantity: final_qty,
+          },
+        });
+      }
+      
       await Cartmutate();
 
-      router.back();
+      closeQtyEdit()
       setaddToCart(false);
     } catch (error) {
       setaddToCart(false);
@@ -136,7 +150,7 @@ function QuantityEdit({
       await Cartmutate();
       setaddToCart(false);
 
-      router.back();
+      closeQtyEdit()
     } catch (error) {
       setaddToCart(false);
     }
@@ -147,9 +161,7 @@ function QuantityEdit({
       <Dialog
         // disablePortal
         disableScrollLock
-        onClose={() => {
-          router.back();
-        }}
+        onClose={closeQtyEdit}
         fullWidth
         open={openQtyEdit}
         sx={{
@@ -273,10 +285,9 @@ function QuantityEdit({
         <DialogActions>
           <Button
             disabled={AddingToCart}
-            onClick={() => {
-              router.back();
-            }}
+            onClick={closeQtyEdit}
             fullWidth
+            size="large"
           >
             Cancel
           </Button>
@@ -292,6 +303,7 @@ function QuantityEdit({
             variant="contained"
             color="primary"
             fullWidth
+            size="large"
           >
             Save
           </LoadingButton>

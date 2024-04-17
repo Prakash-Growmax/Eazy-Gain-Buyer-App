@@ -230,7 +230,7 @@ export default function PlpHeader2({
                     key={o.sc_id}
                     iconPosition='start'
                     icon={
-                      navigating ? (
+                      navigating  && (value - 1) === i ? (
                         <CircularProgress size={18} />
                       ) : (
                         <LazyImage

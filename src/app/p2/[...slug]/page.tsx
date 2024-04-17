@@ -38,7 +38,6 @@ export default function Page({
   const [isFetchingData, setIsFetchingData] = useState(false);
 
   async function fetchData() {
-    
     setIsFetchingData(true);
     const { ProductData }: { ProductData: any } = await getData(
       id,
@@ -53,7 +52,7 @@ export default function Page({
       fetchData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, CheckIfBrands, navigating]);
+  }, [id, CheckIfBrands]);
 
   return (
     <>

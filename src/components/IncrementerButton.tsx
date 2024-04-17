@@ -18,6 +18,7 @@ interface IncrementerButtonProps {
   productId?: number;
   setIsOpenCase?: any;
   label?: string;
+  onQuantityClick?:any;
 }
 
 const IncrementerButton = forwardRef(
@@ -31,6 +32,7 @@ const IncrementerButton = forwardRef(
       onDelete,
       addingToCart,
       setIsOpenCase,
+      onQuantityClick,
       productId,
       label,
       ...other
@@ -94,8 +96,9 @@ const IncrementerButton = forwardRef(
           )}
           <Box
             onClick={() => {
-              setIsOpenCase();
-              push(`${pathName}?qty=${productId}`);
+              onQuantityClick(productId)
+              setIsOpenCase()
+              // push(`${pathName}?qty=${productId}`);
             }}
           >
             {quantity}

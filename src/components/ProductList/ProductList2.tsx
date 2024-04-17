@@ -55,7 +55,6 @@ export default function ProductList2({
   );
   const { CartData, ClearCart } = useCart();
   const { CartValue } = useBuildOrderProducts(CartData);
-
   const { DiscountData, DiscountisLoading } = useDiscounts(
     `p/${CurrentId}`,
     ProductData.map((o) => o.productId)

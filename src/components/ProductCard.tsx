@@ -42,7 +42,7 @@ function ProductCard({
   const { t } = useTranslation("Product");
   const [openQtyEdit, setopenQtyEdit] = useState<any>({});
   const searchParams = useSearchParams();
-  const QtyEditProductId = searchParams.get("qty");
+  // const QtyEditProductId = searchParams.get("qty") || "";
   const ImageOpen = searchParams.get("img");
   const pathName = usePathname();
   const { push } = useRouter();
@@ -50,16 +50,16 @@ function ProductCard({
     if (!ImageOpen && lightbox.open) {
       lightbox.onClose();
     }
-    if (openQtyEdit.hasOwnProperty(QtyEditProductId)) {
-      return;
-    } else if (!QtyEditProductId) {
-      setopenQtyEdit({});
-    }
-    if (QtyEditProductId) {
-      setopenQtyEdit({ [QtyEditProductId]: true });
-    }
+    // if (openQtyEdit.hasOwnProperty(QtyEditProductId)) {
+    //   return;
+    // } else if (!QtyEditProductId) {
+    //   setopenQtyEdit({});
+    // }
+    // if (QtyEditProductId) {
+    //   setopenQtyEdit({ [QtyEditProductId]: true });
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [QtyEditProductId, ImageOpen]);
+  }, [ImageOpen]);
   const {
     CartData,
     CartisValidating,
@@ -218,7 +218,7 @@ function ProductCard({
                 color="text.secondary"
                 component="div"
               >
-                {DiscountisLoading || CartisValidating ? (
+                {DiscountisLoading  ? (
                   <Skeleton
                     sx={{
                       my: 0.5,
@@ -376,10 +376,13 @@ function ProductCard({
                     }}
                     quantity={CasesQty}
                     onDecrease={handleRemoveToBag(IsInCart, data, minQty)}
-                    onDelete={handleDeleteToCart(IsInCart, data, CasesQty)}
+                    onDelete={handleDeleteToCart(IsInCart, data, CasesQty, false, true)}
                     onIncrease={handleAddToBag(IsInCart, data, unitOfMeasure)}
                     minQty={minQty}
                     addingToCart={addingToCart}
+                    onQuantityClick={(productId : any) => {
+                      setopenQtyEdit({[productId] : true})
+                    }}
                   />
                 )}
 
@@ -402,6 +405,9 @@ function ProductCard({
                   onIncrease={handleAddToCart(IsInCart, data, minQty)}
                   minQty={minQty}
                   addingToCart={addingToCart}
+                  onQuantityClick={(productId : any) => {
+                    setopenQtyEdit({[productId] : true})
+                  }}
                 />
               </Box>
               <Typography
@@ -499,6 +505,9 @@ function ProductCard({
           CasesQty={CasesQty}
           ShowQty={ShowQty}
           IsOpenCase={IsOpenCase}
+          closeQtyEdit={() => {
+            setopenQtyEdit({})
+          }}
         />
       )}
       <Lightbox
