@@ -18,7 +18,6 @@ import DiscountTable from "./ProductList/DiscountDetails";
 import QuantityEdit from "./QuantityEdit";
 import TextMaxLine from "./TextMaxContent";
 import MuIconify from "./iconify/mui-iconify";
-import Image from "./image";
 import { pluralize } from "./image/utils";
 import Label from "./label";
 import { useLightBox } from "./lightbox";
@@ -187,7 +186,7 @@ function ProductCard({
             maxHeight={125}
             onClick={HandleOpenImage}
           >
-            <Image
+            {/* <Image
               ratio="1/1"
               src={ProductImage}
               sx={{
@@ -201,7 +200,14 @@ function ProductCard({
               }}
               
               alt={productShortDescription || shortDescription}
-            />
+            /> */}
+            <img
+              alt={productShortDescription || shortDescription}
+                  src={ProductImage}
+                  height="100%"
+                  width="100%"
+                  style={{ height: "125px",  width: "125px",  maxHeight: "125px",  maxWidth: "125px", objectFit: "contain" }}
+                />
           </Box>
           <Box
             sx={{
