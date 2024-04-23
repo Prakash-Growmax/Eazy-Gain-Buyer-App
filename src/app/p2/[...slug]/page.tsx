@@ -38,6 +38,7 @@ export default function Page({
   const [ProductData, setProductData] = useState([]);
 
   async function fetchData() {
+    setIsDataFetching(true);
     const { ProductData }: { ProductData: any } = await getData(
       id,
       CheckIfBrands
