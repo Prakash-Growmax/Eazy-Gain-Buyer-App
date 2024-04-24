@@ -12,6 +12,7 @@ import ThemeRegistry from "@/components/Theme/ThemeRegistry";
 import AppHeader from "@/components/header";
 
 export const metadata: Metadata = {
+  manifest: "/manifest.json",
   title: "EazyGain",
   applicationName: "EazyGain",
   other: {
