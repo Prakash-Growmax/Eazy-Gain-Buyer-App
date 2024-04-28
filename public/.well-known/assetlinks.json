@@ -3,6 +3,6 @@
       "target": {
         "namespace": "android_app",
         "package_name": "app.vercel.easy_gain_buyer_mobile.twa",
-        "sha256_cert_fingerprints": ["D7:8E:E7:AA:4D:9F:7A:CE:C3:3C:41:7E:35:97:83:5B:69:81:BC:B8:94:1C:C6:E2:88:4C:EC:92:EE:B1:B7:02"]
+        "sha256_cert_fingerprints": ["D7:9F:4D:35:42:B3:C2:53:39:AE:83:4A:E8:BB:44:A5:2D:27:81:0D:15:69:C9:AC:97:78:DD:35:F7:4E:FC:9C"]
       }
     }]
