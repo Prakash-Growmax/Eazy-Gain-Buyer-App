@@ -16,6 +16,15 @@
       ]
     }
   ],
+  "launch_handler": {
+    "client_mode": "auto"
+  },
+  "scope": "https://easy-gain-buyer-mobile.vercel.app/",
+  "scope_extensions": [
+    {"origin": "*.easy-gain-buyer-mobile.vercel.app"}
+  ],
+  "categories": ["business", "shopping", "social"],
+  "prefer_related_applications": false,
   "screenshots": [
     {
       "src": "android/android-launchericon-48-48.png",
@@ -38,6 +47,18 @@
   ],
   "id": "/",
   "name": "EazyGain",
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "file_handlers": [
+    {
+      "action": "/open-pdf",
+      "accept": {
+        "application/pdf": [".pdf"]
+      },
+      "launch_type": "single-client"
+    }
+],
   "short_name": "EazyGain",
   "description": "B2B APP",
   "dir": "auto",
@@ -462,7 +483,8 @@
     {
       "src": "android/android-launchericon-144-144.png",
       "sizes": "144x144",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "android/android-launchericon-96-96.png",
