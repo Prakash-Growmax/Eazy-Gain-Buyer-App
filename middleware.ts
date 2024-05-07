@@ -6,6 +6,7 @@ export const LangcookieName = "i18next";
 export const locales = ["ta", "en"];
 
 export function middleware(request: NextRequest) {
+  
   const path = request.nextUrl.pathname;
 
   const isPublicPath = path === "/login";
@@ -18,6 +19,7 @@ export function middleware(request: NextRequest) {
     )?.value || "";
 
   const response = NextResponse.next();
+  
   if (isPublicPath && token) {
     return NextResponse.redirect(new URL("/", request.nextUrl));
   }

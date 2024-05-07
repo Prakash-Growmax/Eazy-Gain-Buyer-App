@@ -14,19 +14,20 @@ export default function useSetPublicPageData(isBrand = false) {
   } = useContext(PublicPageContext);
 
   async function fetchBrandData() {
+    setIsDataFetching(true);
     let data = await getBrands();
     setBrandList(data);
     setIsDataFetching(false);
   }
 
   async function fetchCategoryData() {
+    setIsDataFetching(true);
     let data = await getCategoryData();
     setCategoryList(data);
     setIsDataFetching(false);
   }
 
   useEffect(() => {
-    setIsDataFetching(true);
     if (isBrand) {
       if (BrandList?.length === 0) {
         fetchBrandData();

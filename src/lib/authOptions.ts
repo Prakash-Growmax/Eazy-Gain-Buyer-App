@@ -1,8 +1,8 @@
-import requestIp from "request-ip";
+import { getDomainName } from "@/lib/get-domain-name";
 import axios from "axios";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { getDomainName } from "@/lib/get-domain-name";
+import requestIp from "request-ip";
 
 const authOptions: NextAuthOptions = {
   pages: {
@@ -32,13 +32,19 @@ const authOptions: NextAuthOptions = {
               ip: OTP && requestIp.getClientIp(req),
             },
           });
+          if(data?.data?.tokens?.payload?.isSeller){
+            throw new Error("Seller accounts are not allowed.");
+          }
+          
           return {
             ...data.data.tokens,
           };
         } catch (error: any) {
-          console.log(error);
-
-          throw new Error(error?.response?.data?.message);
+          if(typeof error === "object" ){
+            throw new Error(error?.message);
+          }else{
+            throw new Error(error?.response?.data?.message);
+          }
         }
       },
     }),

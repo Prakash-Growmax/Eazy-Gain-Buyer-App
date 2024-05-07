@@ -1,8 +1,8 @@
 "use client";
-import Link from "next/link";
-import Box from "@mui/material/Box";
 import { SxProps } from "@mui/material";
+import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
+import Link from "next/link";
 const Logo = ({
   disabledLink = false,
   sx,
@@ -16,8 +16,8 @@ const Logo = ({
       component="img"
       src={
         palette.mode === "dark"
-          ? "/assets/logo/dark_eazy_gain_logo.svg"
-          : "/assets/logo/light_eazy_gain_logo.svg"
+          ? "/images/logo/dark_eazy_gain_logo.svg"
+          : "/images/logo/light_eazy_gain_logo.svg"
       }
       sx={{ width: 40, height: 40, cursor: "pointer", ...sx }}
     />

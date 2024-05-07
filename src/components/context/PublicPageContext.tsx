@@ -22,7 +22,7 @@ export const PublicPageContext = React.createContext<ContextProps>({
 const PublicPageProvider = ({ children }: { children: ReactNode }) => {
   const [BrandList, setBrandList] = useState<any[]>([]);
   const [CategoryList, setCategoryList] = useState<any[]>([]);
-  const [isDataFetching, setIsDataFetching] = useState<boolean>(false)
+  const [isDataFetching, setIsDataFetching] = useState<boolean>(true)
   return (
     <PublicPageContext.Provider
       value={{

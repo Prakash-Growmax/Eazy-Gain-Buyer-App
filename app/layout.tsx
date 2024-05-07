@@ -1,8 +1,8 @@
 import PublicPageProvider from "@/components/context/PublicPageContext";
-import { LangcookieName } from "@/middleware";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import dynamic from "next/dynamic";
 import { cookies } from "next/headers";
+import { LangcookieName } from "../middleware";
 
 const LangProvider = dynamic(() => import("@/components/context/LangProvider"));
 const Authsession = dynamic(() => import("@/components/providers/Authsession"));
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
-  themeColor: "#0B5CFF",
+
   icons: [
     {
       rel: "shortcut icon",
@@ -68,6 +68,10 @@ export const metadata: Metadata = {
       "A direct-to-retailer platform for Indian retailers to buy 100% authentic products directly from brands.",
   },
 };
+
+export const viewport: Viewport = {
+  themeColor: "#0B5CFF",
+}
 
 export default function RootLayout({
   children,

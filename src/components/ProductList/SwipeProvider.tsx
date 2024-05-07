@@ -25,7 +25,7 @@ export default function SwipeProvider({
 }) {
   const [currentId, setCurrentId] = useState("");
   const [navigating, setNavigating] = useTransition();
-  const [isDataFetching, setIsDataFetching] = useState(false)
+  const [isDataFetching, setIsDataFetching] = useState(true)
   const handleChangeCurrentId = (newId: string) => {
     setCurrentId(newId);
   };

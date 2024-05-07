@@ -1,7 +1,6 @@
-import React from "react";
-import MuIconify from "./iconify/mui-iconify";
 import { IconButton } from "@mui/material";
 import { useRouter } from "next/navigation";
+import MuIconify from "./iconify/mui-iconify";
 
 export default function BackButton() {
   const { back } = useRouter();

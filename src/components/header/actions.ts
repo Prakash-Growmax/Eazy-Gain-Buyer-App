@@ -1,6 +1,6 @@
 "use server";
-import { LangcookieName, locales } from "@/middleware";
 import { cookies } from "next/headers";
+import { LangcookieName, locales } from "../../../middleware";
 
 export async function ChangeLangCookie() {
   const cookieStore = cookies();

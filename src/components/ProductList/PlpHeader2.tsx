@@ -1,12 +1,11 @@
 "use client";
 import {
   AppBar,
-  Box,
   CircularProgress,
   IconButton,
   Skeleton,
   Toolbar,
-  useTheme,
+  useTheme
 } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 
@@ -143,24 +142,29 @@ export default function PlpHeader2({
             <MuIconify icon='eva:search-fill' />
           </IconButton>
         </Toolbar>
-        {isDataFetching ? (
-          <Box
-            display='flex'
-            justifyContent={"center"}
-            alignItems={"center"}
-            px={1}
-          >
-            {new Array(4).fill(0).map((i) => (
-              <Skeleton
-                width={100}
-                height={30}
-                key={i}
-                sx={{ mx: 1 }}
-                animation={"wave"}
-              />
-            ))}
-          </Box>
-        ) : (
+        {isDataFetching && (  <StyledTabs
+         value={value || 0}
+          variant='scrollable'
+          aria-label='styled-tabs-loading'
+        >
+           {new Array(5).fill(0).map((i) => (
+              <StyledTab
+              key={i}
+              label={
+                <Skeleton
+                      width={40}
+                      height={100}
+                      key={i}
+                      sx={{ mx: 1 }}
+                      animation={"wave"}
+                    />
+              }>
+
+              </StyledTab>
+           ))}
+        </StyledTabs>
+        )}
+        {!isDataFetching && (
           <StyledTabs
             variant='scrollable'
             value={value || 0}

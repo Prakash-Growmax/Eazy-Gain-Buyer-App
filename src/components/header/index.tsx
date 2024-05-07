@@ -1,7 +1,6 @@
 "use client";
 import {
   AppBar,
-  Backdrop,
   Badge,
   BadgeProps,
   Box,
@@ -16,7 +15,7 @@ import {
   Stack,
   TextField,
   Toolbar,
-  Typography,
+  Typography
 } from "@mui/material";
 import { alpha, styled, useTheme } from "@mui/material/styles";
 
@@ -26,9 +25,10 @@ import { bgBlur } from "@/components/Theme/css";
 import useUser from "@/lib/hooks/useUser";
 import useCart from "@/lib/hooks/usecart";
 import { signOut } from "next-auth/react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import Logo from "../Logo";
+import Loading from "../UI/Loading/Loading";
 import MuIconify from "../iconify/mui-iconify";
 import { ChangeLangCookie } from "./actions";
 
@@ -37,10 +37,9 @@ export default function AppHeader() {
   const { CartData } = useCart();
   const [openMenu, setOpenMenu] = useState(false);
   const [LogoutLoading, setLogoutLoading] = useState(false);
-  const { push, back } = useRouter();
   const pathName = usePathname();
   const [isPending, startTransition] = useTransition();
-  const {t} = useTranslation("Home");
+  const { t } = useTranslation("Home");
   const handleSearchClick = () => {
     push("/search");
   };
@@ -71,16 +70,7 @@ export default function AppHeader() {
 
   return (
     <>
-      {LogoutLoading ||
-        (isPending && (
-          <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={LogoutLoading || isPending}
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop>
-        ))}
-
+      {LogoutLoading || <Loading isLoading={LogoutLoading || isPending} />}
       {!pathName.includes("/search") &&
         !pathName.includes("/login") &&
         !pathName.includes("/order/success") &&
@@ -166,7 +156,7 @@ export default function AppHeader() {
                     fullWidth
                     onClick={handleSearchClick}
                     size="small"
-                    placeholder={t('Search')}
+                    placeholder={t("Search")}
                     sx={{
                       m: 1,
                     }}
